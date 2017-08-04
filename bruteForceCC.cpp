@@ -1,56 +1,38 @@
-//Conor Kennedy
-//7/31/17
-
-
 #include <iostream>
 #include <string>
 
 using namespace std;
 
-void encypt(string &message, int key) {
-	for (int i = 0; i < message.length(); ++i) {
-		if (isalpha(message[i])) {
-			message[i] = tolower(message[i]);
-			for (int j = 0; j < key; ++j) {
-				if (message[i] == 'z')
-					message[i] = 'a';
-				else
-					message[i]++;
+void bruteForce(string message) {
+	
+	int key = 1;
+
+	while (key <= 26) {
+	string temp = message;
+		for (int i = 0; i < temp.length(); ++i) {
+			if (isalpha(temp[i])) {
+				temp[i] = tolower(temp[i]);
+				for (int j = 0; j < key; ++j)
+					if (temp[i] == 'a')
+						temp[i] = 'z';
+					else
+						--temp[i];
 			}
 		}
+		cout << key << ". " << temp << endl;
+		++key;
 	}
 }
 
-void decrypt(string &message, int key) {
-	for (int i = 0; i < message.length(); ++i) {
-		if (isalpha(message[i])) {
-			message[i] = tolower(message[i]);
-			for (int j = 0; j < key; ++j) {
-				if (message[i] == 'a')
-					message[i] = 'z';
-				else
-					message[i]--;
-			}
-		}
-	}
+int main() {   
 
-}
-
-int main() {
 
 	string message;
-	int key;
 
-	cout << "Enter message for encryption: ";
+	cout << "Enter message to crack: ";
 	getline(cin, message);
-	cout << "Enter key: ";
-	cin >> key;
 
-	encypt(message, key);
-	cout << message << endl;
-	
-	decrypt(message, key);
 	cout << message << endl;
 
-	return 0;
+	bruteForce(message);
 }
